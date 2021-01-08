@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>monstermaze</title>
+  <script src="../../jsgame0.js"></script>
+  <style type="text/css" media="screen">
+body {
+  background-color: white;
+  color: black;
+}
+.hidden {
+  display: none;
+}
+#original {
+  margin-left: 1em;
+}
+  </style>
+</head>
+
+<body>
+<section id="imageLoader" class="hidden">
+  <img class="hidden" src="images/back.png" alt="back">
+  <img class="hidden" src="images/left0.png" alt="left0">
+  <img class="hidden" src="images/left1.png" alt="left1">
+  <img class="hidden" src="images/left2.png" alt="left2">
+  <img class="hidden" src="images/left3.png" alt="left3">
+  <img class="hidden" src="images/left4.png" alt="left4">
+  <img class="hidden" src="images/mid0.png" alt="mid0">
+  <img class="hidden" src="images/mid1.png" alt="mid1">
+  <img class="hidden" src="images/mid2.png" alt="mid2">
+  <img class="hidden" src="images/mid3.png" alt="mid3">
+  <img class="hidden" src="images/mid4.png" alt="mid4">
+  <img class="hidden" src="images/right0.png" alt="right0">
+  <img class="hidden" src="images/right1.png" alt="right1">
+  <img class="hidden" src="images/right2.png" alt="right2">
+  <img class="hidden" src="images/right3.png" alt="right3">
+  <img class="hidden" src="images/right4.png" alt="right4">
+</section>
+
+<main>
+<h1>monstermaze</h1>
+
+<canvas id="screen">
+The game screen appears here if your browser supports the Canvas API.
+</canvas>
+<section id="controls">
+  <button type="button" id="reset">Reset</button>
+  <button type="button" id="pause">Pause</button>
+</section>
+
+<h2>Attribution</h2>
+
+<p><a href="https://wireframe.raspberrypi.org/issues/18">Source Code: recreate 3D Monster Maze's 8-bit labyrinth, pages 40-41, by Mark Vanstone</a>.</p>
+
+<p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported</a>.</p>
+
+<h2>Original Python code</h2>
+
+<pre id="original"><code>
+# 3D Monster Maze
+import pgzrun
+WIDTH = 600
+HEIGHT = 600
+maze = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 1, 0, 1, 0, 1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 1, 0, 1, 0, 1],
+        [1, 1, 0, 1, 0, 0, 0, 0, 0, 1],
+        [1, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 1, 0, 1, 0, 1, 1, 0, 1, 1],
+        [1, 1, 0, 1, 0, 1, 1, 0, 1, 1],
+        [1, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
+playerX = 1
+playerY = 4
+playerDir = 2
+dirX = [-1,0,1,0]
+dirY = [0,1,0,-1]
+
+def draw():
+    screen.fill((255, 255, 255))
+    screen.blit(&quot;back&quot;, (0, 0))
+    drawMaze()
+
+def update():
+    pass
+
+def on_key_down(key):
+    global playerX, playerY, playerDir
+    if key.name == &quot;UP&quot;:
+        newX = playerX + dirX[playerDir]
+        newY = playerY + dirY[playerDir]
+        if maze[newX][newY] == 0:
+            playerX = newX
+            playerY = newY
+    if key.name == &quot;DOWN&quot;:
+        newX = playerX - dirX[playerDir]
+        newY = playerY - dirY[playerDir]
+        if maze[newX][newY] == 0:
+            playerX = newX
+            playerY = newY
+    if key.name == &quot;LEFT&quot;:
+        playerDir -=1
+        if playerDir &lt; 0: playerDir = 3
+    if key.name == &quot;RIGHT&quot;:
+        playerDir +=1
+        if playerDir &gt; 3: playerDir = 0
+
+def drawMaze():
+    dm = 1
+    if(playerDir == 1 or playerDir == 3): dm=-1
+    for l in range(4,-1,-1):
+        x = playerX + (l*dirX[playerDir])
+        y = playerY + (l*dirY[playerDir])
+        if(x&gt;=0 and x&lt;10 and y&gt;=0 and y&lt;10):
+            xl = x + (dirY[playerDir] * dm)
+            yl = y + (dirX[playerDir] * dm)
+            if(maze[xl][yl] == 1):
+                screen.blit(&quot;left&quot;+str(l), (0, 0))
+            xr = x - (dirY[playerDir] * dm)
+            yr = y - (dirX[playerDir] * dm)
+            if(maze[xr][yr] == 1):
+                screen.blit(&quot;right&quot;+str(l), (0, 0))
+            if(maze[x][y] == 1):
+                screen.blit(&quot;mid&quot;+str(l), (0, 0))
+
+pgzrun.go()
+</code></pre>
+</main>
+
+<script>
+// 3D Monster Maze
+WIDTH = 600;
+HEIGHT = 600;
+maze = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 1, 0, 1, 0, 1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 1, 0, 1, 0, 1],
+        [1, 1, 0, 1, 0, 0, 0, 0, 0, 1],
+        [1, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 1, 0, 1, 0, 1, 1, 0, 1, 1],
+        [1, 1, 0, 1, 0, 1, 1, 0, 1, 1],
+        [1, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]];
+var playerX, playerY, playerDir;
+dirX = [-1, 0, 1, 0];
+dirY = [0, 1, 0, -1];
+
+function reset() {
+  playerX = 1;
+  playerY = 4;
+  playerDir = 2;
+}
+
+function draw() {
+  screen.fill([255, 255, 255]);
+  screen.blit("back", [0, 0]);
+  drawMaze();
+}
+
+function on_key_down(key) {
+  let newX, newY;
+  if (key === keys.UP) {
+    newX = playerX + dirX[playerDir];
+    newY = playerY + dirY[playerDir];
+    if (maze[newX][newY] === 0) {
+      playerX = newX;
+      playerY = newY;
+    }
+  }
+  if (key === keys.DOWN) {
+    newX = playerX - dirX[playerDir];
+    newY = playerY - dirY[playerDir];
+    if (maze[newX][newY] === 0) {
+      playerX = newX;
+      playerY = newY;
+    }
+  }
+  if (key === keys.LEFT) {
+    playerDir -= 1;
+    if (playerDir < 0) {
+      playerDir = 3;
+    }
+  }
+  if (key === keys.RIGHT) {
+    playerDir += 1;
+    if (playerDir > 3) {
+      playerDir = 0;
+    }
+  }
+}
+
+function drawMaze() {
+  let dm = 1, x, y, xl, yl, xr, yr;
+  if ((playerDir === 1) || (playerDir === 3)) {
+    dm = -1;
+  }
+  for (let l = 4; l > -1; l--) {
+    x = playerX + (l * dirX[playerDir]);
+    y = playerY + (l * dirY[playerDir]);
+    if ((x >= 0) && (x < 10) && (y >= 0) && (y < 10)) {
+      xl = x + (dirY[playerDir] * dm);
+      yl = y + (dirX[playerDir] * dm);
+      if (maze[xl][yl] === 1) {
+        screen.blit("left" + l, [0, 0]);
+      }
+      xr = x - (dirY[playerDir] * dm);
+      yr = y - (dirX[playerDir] * dm);
+      if (maze[xr][yr] === 1) {
+        screen.blit("right" + l, [0, 0]);
+      }
+      if (maze[x][y] === 1) {
+        screen.blit("mid" + l, [0, 0]);
+      }
+    }
+  }
+}
+
+window.addEventListener('load', (event) => {
+  images.LOAD('#imageLoader img');
+  reset();
+  screen.set_mode('#screen', '#reset', '#pause');
+});
+</script>
+</body>
+
+</html>
