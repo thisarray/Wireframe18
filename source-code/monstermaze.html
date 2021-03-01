@@ -22,22 +22,22 @@ body {
 
 <body>
 <section id="imageLoader" class="hidden">
-  <img class="hidden" src="images/back.png" alt="back">
-  <img class="hidden" src="images/left0.png" alt="left0">
-  <img class="hidden" src="images/left1.png" alt="left1">
-  <img class="hidden" src="images/left2.png" alt="left2">
-  <img class="hidden" src="images/left3.png" alt="left3">
-  <img class="hidden" src="images/left4.png" alt="left4">
-  <img class="hidden" src="images/mid0.png" alt="mid0">
-  <img class="hidden" src="images/mid1.png" alt="mid1">
-  <img class="hidden" src="images/mid2.png" alt="mid2">
-  <img class="hidden" src="images/mid3.png" alt="mid3">
-  <img class="hidden" src="images/mid4.png" alt="mid4">
-  <img class="hidden" src="images/right0.png" alt="right0">
-  <img class="hidden" src="images/right1.png" alt="right1">
-  <img class="hidden" src="images/right2.png" alt="right2">
-  <img class="hidden" src="images/right3.png" alt="right3">
-  <img class="hidden" src="images/right4.png" alt="right4">
+  <img class="hidden" src="images/back.png" alt="back" data-name="back">
+  <img class="hidden" src="images/left0.png" alt="left0" data-name="left0">
+  <img class="hidden" src="images/left1.png" alt="left1" data-name="left1">
+  <img class="hidden" src="images/left2.png" alt="left2" data-name="left2">
+  <img class="hidden" src="images/left3.png" alt="left3" data-name="left3">
+  <img class="hidden" src="images/left4.png" alt="left4" data-name="left4">
+  <img class="hidden" src="images/mid0.png" alt="mid0" data-name="mid0">
+  <img class="hidden" src="images/mid1.png" alt="mid1" data-name="mid1">
+  <img class="hidden" src="images/mid2.png" alt="mid2" data-name="mid2">
+  <img class="hidden" src="images/mid3.png" alt="mid3" data-name="mid3">
+  <img class="hidden" src="images/mid4.png" alt="mid4" data-name="mid4">
+  <img class="hidden" src="images/right0.png" alt="right0" data-name="right0">
+  <img class="hidden" src="images/right1.png" alt="right1" data-name="right1">
+  <img class="hidden" src="images/right2.png" alt="right2" data-name="right2">
+  <img class="hidden" src="images/right3.png" alt="right3" data-name="right3">
+  <img class="hidden" src="images/right4.png" alt="right4" data-name="right4">
 </section>
 
 <main>
@@ -135,19 +135,20 @@ pgzrun.go()
 // 3D Monster Maze
 WIDTH = 600;
 HEIGHT = 600;
-maze = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 0, 1, 0, 1, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 1, 0, 1, 0, 1],
-        [1, 1, 0, 1, 0, 0, 0, 0, 0, 1],
-        [1, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 1, 0, 1, 0, 1, 1, 0, 1, 1],
-        [1, 1, 0, 1, 0, 1, 1, 0, 1, 1],
-        [1, 1, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]];
+
+const MAZE = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+              [1, 1, 0, 1, 0, 1, 0, 0, 0, 1],
+              [1, 0, 0, 0, 0, 1, 0, 1, 0, 1],
+              [1, 1, 0, 1, 0, 0, 0, 0, 0, 1],
+              [1, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+              [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+              [1, 1, 0, 1, 0, 1, 1, 0, 1, 1],
+              [1, 1, 0, 1, 0, 1, 1, 0, 1, 1],
+              [1, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+              [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]];
 var playerX, playerY, playerDir;
-dirX = [-1, 0, 1, 0];
-dirY = [0, 1, 0, -1];
+const DIR_X = [-1, 0, 1, 0];
+const DIR_Y = [0, 1, 0, -1];
 
 function reset() {
   playerX = 1;
@@ -164,17 +165,17 @@ function draw() {
 function on_key_down(key) {
   let newX, newY;
   if (key === keys.UP) {
-    newX = playerX + dirX[playerDir];
-    newY = playerY + dirY[playerDir];
-    if (maze[newX][newY] === 0) {
+    newX = playerX + DIR_X[playerDir];
+    newY = playerY + DIR_Y[playerDir];
+    if (MAZE[newX][newY] === 0) {
       playerX = newX;
       playerY = newY;
     }
   }
   if (key === keys.DOWN) {
-    newX = playerX - dirX[playerDir];
-    newY = playerY - dirY[playerDir];
-    if (maze[newX][newY] === 0) {
+    newX = playerX - DIR_X[playerDir];
+    newY = playerY - DIR_Y[playerDir];
+    if (MAZE[newX][newY] === 0) {
       playerX = newX;
       playerY = newY;
     }
@@ -199,20 +200,20 @@ function drawMaze() {
     dm = -1;
   }
   for (let l = 4; l > -1; l--) {
-    x = playerX + (l * dirX[playerDir]);
-    y = playerY + (l * dirY[playerDir]);
+    x = playerX + (l * DIR_X[playerDir]);
+    y = playerY + (l * DIR_Y[playerDir]);
     if ((x >= 0) && (x < 10) && (y >= 0) && (y < 10)) {
-      xl = x + (dirY[playerDir] * dm);
-      yl = y + (dirX[playerDir] * dm);
-      if (maze[xl][yl] === 1) {
+      xl = x + (DIR_Y[playerDir] * dm);
+      yl = y + (DIR_X[playerDir] * dm);
+      if (MAZE[xl][yl] === 1) {
         screen.blit("left" + l, [0, 0]);
       }
-      xr = x - (dirY[playerDir] * dm);
-      yr = y - (dirX[playerDir] * dm);
-      if (maze[xr][yr] === 1) {
+      xr = x - (DIR_Y[playerDir] * dm);
+      yr = y - (DIR_X[playerDir] * dm);
+      if (MAZE[xr][yr] === 1) {
         screen.blit("right" + l, [0, 0]);
       }
-      if (maze[x][y] === 1) {
+      if (MAZE[x][y] === 1) {
         screen.blit("mid" + l, [0, 0]);
       }
     }
